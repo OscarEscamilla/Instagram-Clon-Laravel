@@ -29,6 +29,7 @@ class User extends Authenticatable
 
     //retorna todas las imagenes relacionadas con el usuario
     public function images(){
+      
         return $this->hasMany('App\Images');
     }
 }

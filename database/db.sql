@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS images(
 
 
 
+
 CREATE TABLE IF NOT EXISTS comments(
     id int(255) auto_increment not null,
     user_id int(255),
@@ -42,7 +43,8 @@ CREATE TABLE IF NOT EXISTS comments(
     CONSTRAINT pk_comments PRIMARY KEY(id),
     CONSTRAINT fk_comments_users FOREIGN KEY(user_id) REFERENCES users(id),
     CONSTRAINT fk_comments_images FOREIGN KEY(image_id) REFERENCES images(id)
-)ENGINE=InoDb;
+)ENGINE=InoDb; 
+
 
 
 CREATE TABLE IF NOT EXISTS likes(
@@ -55,3 +57,32 @@ CREATE TABLE IF NOT EXISTS likes(
     CONSTRAINT fk_likes_users FOREIGN KEY(user_id) REFERENCES users(id),
     CONSTRAINT fk_likes_images FOREIGN KEY(image_id) REFERENCES images(id)
 )ENGINE=InoDb;
+
+
+INSERT INTO users VALUES(null,'user','oscar','escamilla','oscar3scamilla','oscar@oscar.com','password',null, curtime(), curtime(), null);
+INSERT INTO users VALUES(null,'user','manuel','morales','manuelito','manuel@manuel.com','password',null, curtime(), curtime(), null);
+INSERT INTO users VALUES(null,'user','esteban','islas','steph','esteban@esteban.com','password',null, curtime(), curtime(), null);
+
+
+INSERT INTO images VALUES (null, 1, 'caballo1.jpg', 'caballo pura sangre',curtime(), curtime());
+INSERT INTO images VALUES (null, 2, 'horse.jpg', 'caballo cuarto de milla cafe',curtime(), curtime());
+INSERT INTO images VALUES (null, 3, ' node.png', 'entorno de ejecucion',curtime(), curtime());
+
+SELECT images.image_path, users.name FROM images INNER JOIN users ON images.user_id = users.id;
+
+
+INSERT comments VALUES (null,1,2,'un caballo muy bonito',curtime(), curtime());
+INSERT comments VALUES (null,2,3,'programar en nodejs es lo mejor',curtime(), curtime());
+INSERT comments VALUES (null,3,1,'un caballo muy bonito',curtime(), curtime());
+
+
+INSERT INTO likes VALUES(null,1,3,curtime(),curtime());
+INSERT INTO likes VALUES(null,2,1,curtime(),curtime());
+INSERT INTO likes VALUES(null,3,2,curtime(),curtime());
+
+
+
+SELECT images.image_path, comments.content, users.name 
+FROM images INNER JOIN comments 
+ON images.id = comments.image_id 
+INNER JOIN users ON users.id = comments.user_id;
