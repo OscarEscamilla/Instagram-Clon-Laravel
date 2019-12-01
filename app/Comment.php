@@ -4,14 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Commet extends Model
+class Comment extends Model
 {
-    //
     protected $table = 'comments';
-
-
-
-    //relacion de muhcos a uno
+       //relacion de muhcos a uno
     public function user(){
         return $this->belongsTo('App\User', 'user_id');
     }
@@ -22,5 +18,4 @@ class Commet extends Model
     public function image(){
         return $this->belongsTo('App\Image', 'image_id');
     }
-
 }

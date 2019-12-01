@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +10,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+//use App\Image;
+
+
+
+Auth::routes();
+Route::get('/', 'HomeController@index')->name('home');

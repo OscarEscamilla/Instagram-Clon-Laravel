@@ -77,12 +77,16 @@ INSERT comments VALUES (null,3,1,'un caballo muy bonito',curtime(), curtime());
 
 
 INSERT INTO likes VALUES(null,1,3,curtime(),curtime());
+INSERT INTO likes VALUES(null,1,2,curtime(),curtime());
 INSERT INTO likes VALUES(null,2,1,curtime(),curtime());
+INSERT INTO likes VALUES(null,2,3,curtime(),curtime());
 INSERT INTO likes VALUES(null,3,2,curtime(),curtime());
+INSERT INTO likes VALUES(null,3,1,curtime(),curtime());
 
 
 
-SELECT images.image_path, comments.content, users.name 
-FROM images INNER JOIN comments 
-ON images.id = comments.image_id 
-INNER JOIN users ON users.id = comments.user_id;
+
+SELECT images.image_path,  users.name 
+FROM images RIGHT JOIN likes
+ON images.id = likes.image_id
+RIGHT JOIN users ON users.id = likes.user_id;
