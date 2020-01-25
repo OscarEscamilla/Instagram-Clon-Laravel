@@ -4,19 +4,57 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Configuracion de mi Perfil</div>
 
+        <div class="col-md-8">
+            {{-- Alertas de exito o error --}}
+            @if (session('message'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @elseif(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
+            
+
+            <div class="card">
+                <div class="card-header">
+                    Configuracion de mi Perfil
+                </div>
                 <div class="card-body">
-                <form method="POST" action="{{ route('user.update') }}" aria-label="Configuracion de mi Perfil">
+
+                    <form class="form-inline" enctype="multipart/form-data" method="POST" action=" {{ route('user.updatePhoto')}}">
+                        @csrf
+                        <div class="form-group mx-sm-4 mb-2">
+                            <input type="file" class="form-control {{ $errors->has('image') ? ' is-invalid' : '' }}" name="image" id="image" placeholder="Password">
+                            
+                            @if ($errors->has('image'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('image') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary mb-2">Cambiar Foto de Perfil</button>
+                    </form>
+
+                    <div class="dropdown-divider"></div>
+
+                    <form method="POST" action="{{ route('user.update') }}" aria-label="Configuracion de mi Perfil">
                         @csrf
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ Auth::user()->name }}" required autofocus>
+                                <input id="name" type="text" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ Auth::user()->name }}" required>
 
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
@@ -30,7 +68,7 @@
                             <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Surname') }}</label>
 
                             <div class="col-md-6">
-                                <input id="surname" type="text" class="form-control{{ $errors->has('surname') ? ' is-invalid' : '' }}" name="surname" value="{{ Auth::user()->surname }}" required >
+                                <input id="surname" type="text" class="form-control {{ $errors->has('surname') ? ' is-invalid' : '' }}" name="surname" value="{{ Auth::user()->surname }}" required >
 
                                 @if ($errors->has('surname'))
                                     <span class="invalid-feedback" role="alert">
