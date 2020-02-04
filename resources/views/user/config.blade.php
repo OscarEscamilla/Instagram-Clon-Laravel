@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
 
         <div class="col-md-8">
-            {{-- Alertas de exito o error --}}
+            {{-- ALERTAS DE EXITO O ERROR --}}
             @if (session('message'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('message') }}
@@ -23,31 +23,42 @@
                 </div>
             @endif
 
-            
-
+            {{-- INICIO DE CARD QUE ALMACENA FORMULARIOS --}}
             <div class="card">
                 <div class="card-header">
                     Configuracion de mi Perfil
                 </div>
                 <div class="card-body">
-
-                    <form class="form-inline" enctype="multipart/form-data" method="POST" action=" {{ route('user.updatePhoto')}}">
-                        @csrf
-                        <div class="form-group mx-sm-4 mb-2">
-                            <input type="file" class="form-control {{ $errors->has('image') ? ' is-invalid' : '' }}" name="image" id="image" placeholder="Password">
-                            
-                            @if ($errors->has('image'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('image') }}</strong>
-                                </span>
+                    <div class="row">
+                        <div class="col-md-2">
+                            @if (Auth::user()->image)
+                                <img  class="avatar" src="{{ route('user.get_avatar', ['filename' => Auth::user()->image]) }}"/>
+                            @else
+                                <img  class="avatar" src="https://bolavip.com/arte/usuario_null.jpg"/>
                             @endif
+
+                            
                         </div>
-                        <button type="submit" class="btn btn-sm btn-primary mb-2">Cambiar Foto de Perfil</button>
-                    </form>
-
-                    <div class="dropdown-divider"></div>
-
-                    <form method="POST" action="{{ route('user.update') }}" aria-label="Configuracion de mi Perfil">
+                        <div class="col-md-10 mt-4">
+                            {{-- FORMULARIO DE ACTUALIZACION DE IMAGEN DE PERFIL DEL USUARIO --}} 
+                            <form class="form-inline" enctype="multipart/form-data" method="POST" action=" {{ route('user.update_photo')}}">
+                                @csrf
+                                <div class="form-group mx-sm-4 mb-2">
+                                    <input type="file" class="form-control {{ $errors->has('image') ? ' is-invalid' : '' }}" name="image" id="image">
+                                    
+                                    @if ($errors->has('image'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('image') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-primary mb-2">Cambiar Foto de Perfil</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider m-4" ></div>
+                    {{-- FORMULARIO DE ACTUALIZACION DE INFORMACION DEL USUARIO --}}
+                    <form method="POST" action="{{ route('user.update_data') }}" aria-label="Configuracion de mi Perfil">
                         @csrf
 
                         <div class="form-group row">
